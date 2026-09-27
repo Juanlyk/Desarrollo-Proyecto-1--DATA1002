@@ -24,4 +24,4 @@ def limpieza_datos(df):
     return df_bogota
 # 5. Mostrar cuántos registros había antes y después del filtro
 print("Total registros originales:", len(df))
-print("Registros mayores de 18 que vivieron en Bogotá:", len(limpieza_datos(df)))
+print("Registros de personas mayores de 18 que vivieron en Bogotá:", len(limpieza_datos(df)))
