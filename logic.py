@@ -1,4 +1,5 @@
 import pandas as pd
+from tabulate import tabulate
 
 df = pd.read_csv("Características y composición del hogar.csv", sep= ";")
 
@@ -60,6 +61,8 @@ def cada_variable(df):
         "Proporción de Vacíos en la Salud.": str(float(porcentajes[5]))
     }
     
-    return datos
+    filas = list(datos.items())
+    
+    return tabulate(filas, headers=["Variable", "Valor"], tablefmt="grid", floatfmt=".1f")
 
 print(cada_variable(df))
