@@ -1,31 +1,37 @@
 import pandas as pd
 from tabulate import tabulate
 
-df = pd.read_csv("Características y composición del hogar.csv", sep= ";")
+def cargar_datos (filepath):
+    """ Paso 1: Leer el archivo CSV. """
+    print("Cargando datos...")
+    df = pd.read_csv("Características y composición del hogar.csv", sep= ";")
+    return df
 
-print(df.head())
 def limpieza_datos(df):
-    """El objetivo de esta función es el de limpiar los datos
-    del dataframe, debido a que nuestro trabajo se restringe principalmente a 
-    personas de 18 años o mas, y que hayan vivido en bogotá los últimos 12 meses.
-
+    """ Paso 2: En esta funcion limpiaremos los datos del dataframe, ya que nuestro trabajo 
+    esta orientado a personas de 18 o mas y que hayan vivido en Bogota en los ultimos 12 meses.
     Args:
         df (Dataframe) -> El archivo csv original
     Return 
         df (Dataframe) -> El Dataframe ya limpio con las variables a trabajar.
     """
-
+    total_original = len(df)
+    
     # 3. Filtrar por personas de 18 años o más, la variable p6040 se refiere a los años cumplidos de cada individuo
     df_mayores18 = df[df["P6040"] >= 18]
+    total_mayores18 = len(df_mayores18)
 
     # 4. Filtrar por personas que vivieron en Bogotá en los últimos 12 meses
     # La variable P753S1 indica en que departamento vivio en los ultimos 12 meses, el codigo 11 del "divipola" indica a bogota
     df_bogota = df_mayores18[df_mayores18["P753S1"] == 11]
+    total_bogota18 = len(df_bogota)
+    
+    print("Reporte de los filtros")
+    print(f"Total registros originales: {total_original}")
+    print(f"Total de registros Mayores de 18 (P6040): {total_mayores18}")
+    print(f"Total de registros mayores de 18 en Bogotá (P753S1): {total_bogota18}")
 
     return df_bogota
-# 5. Mostrar cuántos registros había antes y después del filtro
-print("Total registros originales:", len(df))
-print("Registros de personas mayores de 18 que vivieron en Bogotá:", len(limpieza_datos(df)))
 
 def cada_variable(df):
     new_frame = limpieza_datos(df)
